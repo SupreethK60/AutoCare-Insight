@@ -62,3 +62,4 @@ test('Diagnostic Semantic / Vector Similarity Search Tests', async (t) => {
     assert.deepEqual(results, [], 'Empty query must return empty array');
   });
 });
+

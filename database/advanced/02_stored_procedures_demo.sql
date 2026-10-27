@@ -117,3 +117,4 @@ CALL sp_mechanic_workload_summary(4, 90);
 SELECT '--- Procedure 2: sp_replenish_low_stock_parts demonstration ---' AS check_title;
 CALL sp_replenish_low_stock_parts(5, @updated_count, @units_added);
 SELECT @updated_count AS low_stock_parts_restocked, @units_added AS total_units_replenished;
+

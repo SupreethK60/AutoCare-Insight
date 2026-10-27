@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AutoCare Insight — DBMS Experiential Learning Project Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 15mm 20mm 15mm;
+      @bottom-right {
+        content: counter(page);
+      }
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.55;
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #0f172a;
+      font-size: 20pt;
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 6px;
+      margin-top: 24pt;
+      margin-bottom: 12pt;
+      page-break-after: avoid;
+    }
+    h2 {
+      color: #1e3a8a;
+      font-size: 14pt;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+      margin-top: 18pt;
+      margin-bottom: 8pt;
+      page-break-after: avoid;
+    }
+    h3 {
+      color: #334155;
+      font-size: 11.5pt;
+      margin-top: 12pt;
+      margin-bottom: 6pt;
+      page-break-after: avoid;
+    }
+    p, li {
+      color: #334155;
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12pt 0;
+      font-size: 8.5pt;
+      page-break-inside: avoid;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 5pt 7pt;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 600;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    pre, code {
+      font-family: "Cascadia Code", "Courier New", Courier, monospace;
+      font-size: 8.5pt;
+      background-color: #f8fafc;
+      border-radius: 4px;
+    }
+    pre {
+      border: 1px solid #e2e8f0;
+      padding: 8pt;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      page-break-inside: avoid;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    p code, li code {
+      padding: 1pt 3pt;
+      background-color: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      color: #0369a1;
+    }
+    blockquote {
+      border-left: 4px solid #2563eb;
+      margin: 0;
+      padding-left: 10pt;
+      color: #475569;
+      font-style: italic;
+    }
+    .cover {
+      text-align: center;
+      padding-top: 40pt;
+      padding-bottom: 60pt;
+      page-break-after: always;
+    }
+    .cover h1 {
+      font-size: 26pt;
+      color: #1e3a8a;
+      border: none;
+      margin-bottom: 10pt;
+    }
+    .cover p {
+      text-align: center;
+      font-size: 12pt;
+      color: #475569;
+    }
+    .cover-meta {
+      margin-top: 80pt;
+      border-top: 1px solid #cbd5e1;
+      padding-top: 20pt;
+    }
+  </style>
+</head>
+<body>
+  <h1>AutoCare Insight: Vehicle Service Management &amp; Predictive Maintenance System</h1>
+<h2>DBMS Experiential Learning — Level 3 Comprehensive Project Report</h2>
+<p><strong>Department of Computer Science and Engineering</strong><br />
+<strong>PES University, Bengaluru, India</strong><br />
+<strong>Course:</strong> Database Management Systems (DBMS Level 3)<br />
+<strong>Academic Year:</strong> 2025–2026<br />
+<strong>Document Classification:</strong> Final Project Technical Submission</p>
+<hr />
+<h2>Executive Summary / Abstract</h2>
+<p><strong>AutoCare Insight</strong> is an enterprise-grade vehicle service lifecycle management, parts inventory control, and predictive maintenance platform engineered to resolve operational fragmentation in modern automotive workshops. Addressing the distinct architectural needs of automotive service operations, the platform implements a <strong>Dual-Database Architecture</strong>:</p>
+<ol>
+<li><strong>Relational Paradigm (MySQL 8.0)</strong>: Guarantees strict ACID transaction properties, referential integrity, and ledger accountability across 13 interrelated relational entities handling appointment scheduling, service order dispatching, mechanic assignments, spare parts inventory deduction, and automated 18% GST billing.</li>
+<li><strong>Document Paradigm (MongoDB 8.2)</strong>: Manages semi-structured, polymorphic vehicle inspection reports with dynamic multi-point diagnostic findings, OBD-II diagnostic trouble codes (DTCs), and technician recommendations, validated at database level via JSON Schema.</li>
+<li><strong>Semantic Vector Search Engine</strong>: Implements an in-memory 64-dimensional dense semantic embedding space normalized to unit length, enabling natural-language diagnostic similarity searches using Cosine Similarity over both curated diagnostic symptom benchmarks and historical MongoDB inspection records.</li>
+</ol>
+<p>The system is deployed on a modern <strong>Next.js 14 App Router</strong> frontend and TypeScript backend, featuring Role-Based Access Control (RBAC) across three distinct enterprise personas (<code>Admin</code>, <code>Service Advisor</code>, <code>Mechanic</code>), and includes an interactive educational SQL query runner executing 20 distinct relational queries, a 7-pipeline MongoDB analytical aggregation engine, and automated stock deduction triggers.</p>
+<hr />
+<h2>Table of Contents</h2>
+<ol>
+<li><strong>Section 1: Project Overview and Abstract</strong></li>
+<li><strong>Section 2: Problem Statement, Motivation, and Objectives</strong></li>
+<li><strong>Section 3: Requirements Specification and Scope</strong></li>
+<li><strong>Section 4: System Architecture and Technology Stack</strong></li>
+<li><strong>Section 5: Database Design and ER Diagram</strong></li>
+<li><strong>Section 6: Relational Database Schema and Data Dictionary</strong></li>
+<li><strong>Section 7: MongoDB Schema and Document Design</strong></li>
+<li><strong>Section 8: Data Import, Validation, and Integrity</strong></li>
+<li><strong>Section 9: Backend API and Authentication/RBAC</strong></li>
+<li><strong>Section 10: Frontend Design and Feature Workflows</strong></li>
+<li><strong>Section 11: Advanced SQL, MongoDB Aggregations, and Vector Search</strong></li>
+<li><strong>Section 12: Testing, Verification, Results, and Limitations</strong></li>
+<li><strong>Section 13: Installation, User Guide, Conclusion, and Future Enhancements</strong></li>
+</ol>
+<hr />
+<h2>Section 1: Project Overview and Abstract</h2>
+<p>Modern automotive service centers grapple with severe operational silos. Relational transactional workloads—such as inventory stock control, service order accounting, labor billing, and appointment booking—mandate strict atomicity, zero tolerance for financial discrepancies, and high referential integrity. Conversely, vehicle health assessments, multi-point diagnostic inspections, and sensor telemetry exhibit highly variable, semi-structured properties where rigid tabular schemas lead to excessive null values and schema bloat.</p>
+<p>AutoCare Insight harmonizes these paradigms through an architectural separation of concerns:</p>
+<ul>
+<li><strong>Transactional Core (MySQL 8.0)</strong>: Manages 13 relational entities with 18 Foreign Key constraints, stored procedures for scheduling and billing, and event-driven triggers for real-time inventory deductions.</li>
+<li><strong>Diagnostic Document Store (MongoDB 8.2)</strong>: Accommodates polymorphic multi-point inspection checkpoints across varied automotive subsystems (Engine, Transmission, Brakes, Suspension, Battery, Electrical) with JSON Schema validation and aggregation analytics.</li>
+<li><strong>Diagnostic Vector Search</strong>: A 64-dimensional dense vector search engine that maps natural language symptom queries to historical repair documents using Cosine Similarity.</li>
+<li><strong>Full-Stack Application Layer</strong>: A Next.js 14 application built with TypeScript, Tailwind CSS, secure HTTP-only JWT sessions, and RBAC authorization.</li>
+</ul>
+<hr />
+<h2>Section 2: Problem Statement, Motivation, and Objectives</h2>
+<h3>2.1 Problem Statement</h3>
+<p>Conventional workshop management applications suffer from three critical bottlenecks:</p>
+<ol>
+<li><strong>Relational Over-Engineering for Unstructured Diagnostics</strong>: Forcing vehicle inspection checklists into rigid tabular schemas results in sparse tables, high schema maintenance overhead, and difficulty accommodating emerging EV/hybrid powertrain components.</li>
+<li><strong>Disconnected Inventory and Labor Accounting</strong>: Delays between technician part consumption in service bays and front-desk invoice generation lead to inventory drift, unbilled parts, and stockouts.</li>
+<li><strong>Keyword-Dependent Symptom Search</strong>: Workshop advisors and mechanics cannot effectively query historical repair archives using natural language complaints (e.g., <em>&quot;car shudders under acceleration with clicking noise&quot;</em>), leading to repetitive diagnostic cycles and redundant labor.</li>
+</ol>
+<h3>2.2 Project Objectives</h3>
+<ul>
+<li><strong>ACID Transaction Guarantees</strong>: Enforce strict atomicity and financial consistency for vehicle bookings, service execution, and billing settlements.</li>
+<li><strong>Automated Inventory Control</strong>: Implement database-level triggers that decrement physical stock upon part allocation and automatically flag items falling below safety reorder thresholds.</li>
+<li><strong>Polymorphic Diagnostic Storage</strong>: Provide dynamic multi-point inspection capture with schema validation, DTC logging, and health score calculations.</li>
+<li><strong>Semantic Diagnostic Retrieval</strong>: Provide a dense vector similarity search engine linking symptom queries to historical inspection records.</li>
+<li><strong>Enterprise RBAC</strong>: Ensure strict role separation between administrative staff, service advisors, and shop-floor mechanics.</li>
+</ul>
+<hr />
+<h2>Section 3: Requirements Specification and Scope</h2>
+<h3>3.1 Functional Requirements (FR)</h3>
+<ul>
+<li><strong>FR-01 (Customer &amp; Vehicle Fleet Directory)</strong>: Maintain customer profiles, loyalty tiers, and vehicle registrations linked to technical catalogue specifications.</li>
+<li><strong>FR-02 (Alternative Fuel &amp; EV Catalogue)</strong>: Ingest and browse 3,229 Department of Energy vehicle models with side-by-side fuel economy and range comparison.</li>
+<li><strong>FR-03 (Service Booking with Conflict Detection)</strong>: Schedule appointments via stored procedures verifying that vehicles have no conflicting active appointments.</li>
+<li><strong>FR-04 (Workshop Bay Job Dispatching)</strong>: Manage technician assignment, job status transitions (<code>assigned</code> → <code>in_progress</code> → <code>completed</code>), and odometer verification.</li>
+<li><strong>FR-05 (Trigger-Driven Part Allocation)</strong>: Charge parts to active service jobs with automated inventory stock decrementing and audit logging.</li>
+<li><strong>FR-06 (Polymorphic MongoDB Inspection Reports)</strong>: Author, validate, and retrieve multi-point diagnostic inspection reports linked to MySQL job IDs.</li>
+<li><strong>FR-07 (Automated Tax Invoicing &amp; Settlement)</strong>: Generate invoices with 18% GST and itemized labor/parts, updating settlement status via triggers upon payment recording.</li>
+<li><strong>FR-08 (MongoDB Analytical Aggregations)</strong>: Compute fleet health trends, subsystem failure frequencies, and cost exposures using multi-stage aggregation pipelines.</li>
+<li><strong>FR-09 (Semantic Vector Search)</strong>: Search diagnostic symptoms and findings using 64-dimensional dense semantic vectors and Cosine Similarity.</li>
+<li><strong>FR-10 (Interactive SQL Query Runner)</strong>: Provide a read-only query catalog executing 20 educational SQL queries demonstrating joins, subqueries, CTEs, and window functions.</li>
+</ul>
+<h3>3.2 Non-Functional Requirements (NFR)</h3>
+<ul>
+<li><strong>NFR-01 (Consistency &amp; Integrity)</strong>: 100% adherence to InnoDB referential constraints with zero orphaned records upon transaction rollback.</li>
+<li><strong>NFR-02 (Performance &amp; Latency)</strong>: Sub-50ms execution times for indexed relational queries and sub-100ms response times for MongoDB aggregations.</li>
+<li><strong>NFR-03 (Security &amp; Least Privilege)</strong>: Role-Based Access Control enforced on every API route; passwords hashed using bcrypt (10 rounds); JWT stored in HTTP-only cookies.</li>
+<li><strong>NFR-04 (Auditability)</strong>: Complete audit tracking of inventory stock adjustments and pricing modifications via database triggers.</li>
+</ul>
+<hr />
+<h2>Section 4: System Architecture and Technology Stack</h2>
+<h3>4.1 Architectural Overview</h3>
+<p>The platform employs a 3-tier enterprise architecture separating client presentation, server-side business logic, and dual database persistence layers:</p>
+<pre><code>+-------------------------------------------------------------------------+
+|                         PRESENTATION LAYER                              |
+|   Next.js 14 App Router (React 18, TypeScript, Tailwind CSS, Lucide)    |
+|   Pages: Dashboard, Appointments, Jobs, Reports, Catalogue, Inventory, |
+|          Invoices, SQL Runner, Aggregations, Vector Search              |
++-------------------------------------------------------------------------+
+                                    |
+                                    | HTTPS / JSON API
+                                    v
++-------------------------------------------------------------------------+
+|                       APPLICATION &amp; API LAYER                           |
+|   Next.js Server Route Handlers (27 Dynamic API Endpoints)              |
+|   • Auth &amp; Session Engine (JWT in HTTP-only Cookies, Bcrypt)            |
+|   • RBAC Authorization Guard (Admin, Service Advisor, Mechanic)         |
+|   • Query Registry &amp; Parameter Validator (Parameterized SQL)            |
+|   • Vector Search Engine (64-D Dense Semantic Encoder &amp; Cosine Ranker)  |
+|   • MongoDB Aggregation Pipeline Registry (7 Predefined Pipelines)      |
++-------------------------------------------------------------------------+
+                    |                                   |
+        MySQL2 / Promise Pool                   Official MongoDB Driver
+                    v                                   v
++-------------------------------------+ +---------------------------------+
+|        RELATIONAL DATA STORE        | |       DOCUMENT DATA STORE       |
+|              MySQL 8.0              | |           MongoDB 8.2           |
+| • 13 Core Relational Tables         | | • repair_reports Collection     |
+| • 18 Foreign Key Constraints        | | • JSON Schema Validator         |
+| • 6 Views (Reporting &amp; Audit)       | | • Multi-Point Inspection Arrays |
+| • 5 Stored Procedures &amp; 2 Functions | | • Text Indexes on Symptoms      |
+| • 5 Triggers &amp; Audit Logging Table  | | • Multi-Stage Aggregations      |
++-------------------------------------+ +---------------------------------+
+</code></pre>
+<h3>4.2 Technology Stack</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Technology</th>
+<th>Version</th>
+<th>Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Frontend Framework</strong></td>
+<td>Next.js (App Router)</td>
+<td>14.2.35</td>
+<td>Server Components, file-system routing, and built-in API handling</td>
+</tr>
+<tr>
+<td><strong>UI Library</strong></td>
+<td>React &amp; Tailwind CSS</td>
+<td>18.3.1 / 3.4.14</td>
+<td>Component reusability, responsive utility-first layout</td>
+</tr>
+<tr>
+<td><strong>Type System</strong></td>
+<td>TypeScript</td>
+<td>5.6.3</td>
+<td>Compile-time type safety across data providers and UI</td>
+</tr>
+<tr>
+<td><strong>Relational Database</strong></td>
+<td>MySQL Server</td>
+<td>8.0.40</td>
+<td>Enterprise ACID transactions, triggers, stored procedures, window functions</td>
+</tr>
+<tr>
+<td><strong>Document Database</strong></td>
+<td>MongoDB Community</td>
+<td>8.2.0</td>
+<td>Polymorphic JSON document store with JSON Schema validation</td>
+</tr>
+<tr>
+<td><strong>SQL Connection Layer</strong></td>
+<td><code>mysql2/promise</code></td>
+<td>3.11.3</td>
+<td>Connection pooling, prepared statements, and async transaction management</td>
+</tr>
+<tr>
+<td><strong>NoSQL Client</strong></td>
+<td><code>mongodb</code> native driver</td>
+<td>6.10.0</td>
+<td>High-performance BSON serialization and aggregation pipelines</td>
+</tr>
+<tr>
+<td><strong>Security &amp; Auth</strong></td>
+<td><code>jsonwebtoken</code> &amp; <code>bcryptjs</code></td>
+<td>9.0.2 / 2.4.3</td>
+<td>Stateless JWT tokens in HTTP-only cookies; salted password hashing</td>
+</tr>
+<tr>
+<td><strong>Vector Engine</strong></td>
+<td>Native Dense Vector Space</td>
+<td>Custom 64-D</td>
+<td>In-memory normalized dense semantic space with Cosine Similarity</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Section 5: Database Design and ER Diagram</h2>
+<h3>5.1 Relational Entity Overview</h3>
+<p>The relational core models workshop business operations across 13 tables:</p>
+<ol>
+<li><code>users</code>: System staff profiles with hashed credentials and roles (<code>admin</code>, <code>service_advisor</code>, <code>mechanic</code>).</li>
+<li><code>customers</code>: Vehicle owners with contact profiles and loyalty reward balances.</li>
+<li><code>vehicle_catalogue</code>: Technical reference data of 3,229 EV and alternative fuel models.</li>
+<li><code>customer_vehicles</code>: Registered customer fleet vehicles linked to catalogue models.</li>
+<li><code>service_types</code>: Catalog of labor operations with base standard pricing.</li>
+<li><code>appointments</code>: Booking schedule linking customers, vehicles, advisors, and services.</li>
+<li><code>service_jobs</code>: Service bay repair tickets tracking mechanics, odometers, and status.</li>
+<li><code>job_services</code>: Line items of specific services performed on a job.</li>
+<li><code>spare_parts</code>: Inventory catalog tracking part numbers, costs, selling prices, and stock.</li>
+<li><code>part_usage</code>: Parts consumed on service jobs with unit prices charged.</li>
+<li><code>invoices</code>: Financial tax invoices computing subtotal, 18% GST, discounts, and total.</li>
+<li><code>invoice_payments</code>: Settlement transaction receipts recording amounts and payment methods.</li>
+<li><code>maintenance_reminders</code>: Preventive maintenance alerts generated by database triggers.</li>
+</ol>
+<h3>5.2 Entity-Relationship (ER) Diagram</h3>
+<pre><code class="language-mermaid">erDiagram
+    users ||--o{ appointments : &quot;manages as advisor&quot;
+    users ||--o{ service_jobs : &quot;assigned as mechanic&quot;
+    customers ||--o{ customer_vehicles : &quot;owns&quot;
+    customers ||--o{ appointments : &quot;books&quot;
+    customers ||--o{ invoices : &quot;billed to&quot;
+    vehicle_catalogue ||--o{ customer_vehicles : &quot;specifies&quot;
+    customer_vehicles ||--o{ appointments : &quot;scheduled for&quot;
+    customer_vehicles ||--o{ service_jobs : &quot;serviced in&quot;
+    customer_vehicles ||--o{ maintenance_reminders : &quot;alerted for&quot;
+    appointments ||--o| service_jobs : &quot;initiates&quot;
+    service_types ||--o{ appointments : &quot;requested&quot;
+    service_types ||--o{ job_services : &quot;performed&quot;
+    service_jobs ||--o{ job_services : &quot;contains labor&quot;
+    service_jobs ||--o{ part_usage : &quot;consumes parts&quot;
+    service_jobs ||--o| invoices : &quot;billed via&quot;
+    spare_parts ||--o{ part_usage : &quot;deducted from&quot;
+    invoices ||--o{ invoice_payments : &quot;settled with&quot;
+
+    users {
+        int user_id PK
+        string email UK
+        string full_name
+        string role
+        string password_hash
+    }
+    customers {
+        int customer_id PK
+        string full_name
+        string phone
+        string email
+        int loyalty_points
+    }
+    customer_vehicles {
+        int vehicle_id PK
+        int customer_id FK
+        int catalogue_id FK
+        string license_plate UK
+        string vin UK
+        int current_odometer
+    }
+    service_jobs {
+        int job_id PK
+        int appointment_id FK
+        int mechanic_id FK
+        int vehicle_id FK
+        string status
+        int odometer_in
+        int odometer_out
+        string mongo_report_id
+    }
+    spare_parts {
+        int part_id PK
+        string part_number UK
+        string part_name
+        decimal unit_cost
+        decimal selling_price
+        int qty_in_stock
+        int reorder_level
+    }
+    invoices {
+        int invoice_id PK
+        int job_id FK
+        int customer_id FK
+        decimal subtotal
+        decimal tax_amount
+        decimal total_amount
+        string status
+    }
+</code></pre>
+<hr />
+<h2>Section 6: Relational Database Schema and Data Dictionary</h2>
+<p>The data dictionary specifies all table structures, data types, constraints, and relational dependencies:</p>
+<h3>Table 1: <code>users</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>user_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Unique system user ID</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>VARCHAR(150)</td>
+<td>NO</td>
+<td>UNIQUE</td>
+<td>—</td>
+<td>User login email address</td>
+</tr>
+<tr>
+<td><code>password_hash</code></td>
+<td>VARCHAR(255)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Bcrypt salted password hash</td>
+</tr>
+<tr>
+<td><code>full_name</code></td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Full display name</td>
+</tr>
+<tr>
+<td><code>role</code></td>
+<td>ENUM</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td><code>'admin'</code>, <code>'service_advisor'</code>, <code>'mechanic'</code></td>
+</tr>
+<tr>
+<td><code>phone</code></td>
+<td>VARCHAR(20)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Contact phone number</td>
+</tr>
+<tr>
+<td><code>is_active</code></td>
+<td>TINYINT(1)</td>
+<td>NO</td>
+<td>—</td>
+<td>1</td>
+<td>Account activation status</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 2: <code>customers</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>customer_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Unique customer identifier</td>
+</tr>
+<tr>
+<td><code>full_name</code></td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Customer primary name</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td>VARCHAR(150)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Email address</td>
+</tr>
+<tr>
+<td><code>phone</code></td>
+<td>VARCHAR(25)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Primary contact phone</td>
+</tr>
+<tr>
+<td><code>address</code></td>
+<td>VARCHAR(255)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Street address</td>
+</tr>
+<tr>
+<td><code>city</code></td>
+<td>VARCHAR(50)</td>
+<td>NO</td>
+<td>—</td>
+<td><code>'Bengaluru'</code></td>
+<td>City of residence</td>
+</tr>
+<tr>
+<td><code>loyalty_points</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>—</td>
+<td>0</td>
+<td>Accumulated reward points</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 3: <code>vehicle_catalogue</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>catalogue_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Unique vehicle model ID</td>
+</tr>
+<tr>
+<td><code>manufacturer</code></td>
+<td>VARCHAR(100)</td>
+<td>NO</td>
+<td>MUL</td>
+<td>—</td>
+<td>Make (e.g., Tesla, Tata, BMW)</td>
+</tr>
+<tr>
+<td><code>model</code></td>
+<td>VARCHAR(150)</td>
+<td>NO</td>
+<td>MUL</td>
+<td>—</td>
+<td>Vehicle model name</td>
+</tr>
+<tr>
+<td><code>model_year</code></td>
+<td>SMALLINT UNSIGNED</td>
+<td>NO</td>
+<td>MUL</td>
+<td>—</td>
+<td>Model manufacture year</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Vehicle body class</td>
+</tr>
+<tr>
+<td><code>fuel</code></td>
+<td>VARCHAR(100)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Primary fuel/powertrain</td>
+</tr>
+<tr>
+<td><code>electric_range</code></td>
+<td>SMALLINT UNSIGNED</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>All-electric range in miles</td>
+</tr>
+<tr>
+<td><code>alt_economy_combined</code></td>
+<td>DECIMAL(5,1)</td>
+<td>YES</td>
+<td>—</td>
+<td>NULL</td>
+<td>Combined MPGe rating</td>
+</tr>
+<tr>
+<td><code>source_dataset</code></td>
+<td>ENUM</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td><code>'LDV'</code>, <code>'AFV'</code>, <code>'MHD'</code></td>
+</tr>
+</tbody>
+</table>
+<h3>Table 4: <code>customer_vehicles</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vehicle_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Registered vehicle ID</td>
+</tr>
+<tr>
+<td><code>customer_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>FK</td>
+<td>—</td>
+<td>FK → <code>customers.customer_id</code></td>
+</tr>
+<tr>
+<td><code>catalogue_id</code></td>
+<td>INT UNSIGNED</td>
+<td>YES</td>
+<td>FK</td>
+<td>NULL</td>
+<td>FK → <code>vehicle_catalogue.catalogue_id</code></td>
+</tr>
+<tr>
+<td><code>license_plate</code></td>
+<td>VARCHAR(20)</td>
+<td>NO</td>
+<td>UNIQUE</td>
+<td>—</td>
+<td>Vehicle registration number</td>
+</tr>
+<tr>
+<td><code>vin</code></td>
+<td>VARCHAR(17)</td>
+<td>YES</td>
+<td>UNIQUE</td>
+<td>NULL</td>
+<td>17-character VIN</td>
+</tr>
+<tr>
+<td><code>current_odometer</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>—</td>
+<td>0</td>
+<td>Current odometer reading (km)</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 5: <code>spare_parts</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>part_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Unique spare part ID</td>
+</tr>
+<tr>
+<td><code>part_number</code></td>
+<td>VARCHAR(50)</td>
+<td>NO</td>
+<td>UNIQUE</td>
+<td>—</td>
+<td>Manufacturer SKU / Part No</td>
+</tr>
+<tr>
+<td><code>part_name</code></td>
+<td>VARCHAR(150)</td>
+<td>NO</td>
+<td>MUL</td>
+<td>—</td>
+<td>Name of spare component</td>
+</tr>
+<tr>
+<td><code>unit_cost</code></td>
+<td>DECIMAL(10,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Acquisition cost (INR)</td>
+</tr>
+<tr>
+<td><code>selling_price</code></td>
+<td>DECIMAL(10,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>—</td>
+<td>Selling price (<code>&gt;= unit_cost</code>)</td>
+</tr>
+<tr>
+<td><code>qty_in_stock</code></td>
+<td>INT</td>
+<td>NO</td>
+<td>—</td>
+<td>0</td>
+<td>Current inventory count</td>
+</tr>
+<tr>
+<td><code>reorder_level</code></td>
+<td>INT</td>
+<td>NO</td>
+<td>—</td>
+<td>5</td>
+<td>Restock threshold trigger</td>
+</tr>
+</tbody>
+</table>
+<h3>Table 6: <code>invoices</code></h3>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Nullable</th>
+<th>Key</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>invoice_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>PK</td>
+<td>Auto-inc</td>
+<td>Tax invoice number</td>
+</tr>
+<tr>
+<td><code>job_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>FK</td>
+<td>—</td>
+<td>FK → <code>service_jobs.job_id</code></td>
+</tr>
+<tr>
+<td><code>customer_id</code></td>
+<td>INT UNSIGNED</td>
+<td>NO</td>
+<td>FK</td>
+<td>—</td>
+<td>FK → <code>customers.customer_id</code></td>
+</tr>
+<tr>
+<td><code>subtotal</code></td>
+<td>DECIMAL(10,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>0.00</td>
+<td>Labor + Parts charges</td>
+</tr>
+<tr>
+<td><code>tax_rate</code></td>
+<td>DECIMAL(5,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>18.00</td>
+<td>GST percentage rate</td>
+</tr>
+<tr>
+<td><code>tax_amount</code></td>
+<td>DECIMAL(10,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>0.00</td>
+<td>Computed GST amount</td>
+</tr>
+<tr>
+<td><code>total_amount</code></td>
+<td>DECIMAL(10,2)</td>
+<td>NO</td>
+<td>—</td>
+<td>0.00</td>
+<td>Grand total payable</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>ENUM</td>
+<td>NO</td>
+<td>—</td>
+<td><code>'issued'</code></td>
+<td><code>'issued'</code>, <code>'paid'</code>, <code>'cancelled'</code>, <code>'overdue'</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Section 7: MongoDB Schema and Document Design</h2>
+<h3>7.1 Polymorphic Inspection Schema</h3>
+<p>Vehicle multi-point inspections require dynamic nested arrays to record varied subsystems and diagnostic trouble codes. The <code>repair_reports</code> collection stores BSON documents structured as follows:</p>
+<pre><code class="language-json">{
+  &quot;_id&quot;: { &quot;$oid&quot;: &quot;6644f1a2b3c4d5e6f7a8b9c0&quot; },
+  &quot;job_id&quot;: 1,
+  &quot;vehicle_id&quot;: 1,
+  &quot;mechanic_id&quot;: 4,
+  &quot;overall_health_score&quot;: 92,
+  &quot;diagnostic_codes&quot;: [&quot;P0300&quot;],
+  &quot;findings&quot;: [
+    {
+      &quot;system&quot;: &quot;Brakes&quot;,
+      &quot;condition&quot;: &quot;Good&quot;,
+      &quot;finding&quot;: &quot;Brake pads measured at 8mm front, 7mm rear. Rotors within factory tolerance.&quot;,
+      &quot;action_recommended&quot;: &quot;Next inspection in 10,000 km&quot;,
+      &quot;cost_estimate&quot;: 0
+    },
+    {
+      &quot;system&quot;: &quot;Engine&quot;,
+      &quot;condition&quot;: &quot;Fair&quot;,
+      &quot;finding&quot;: &quot;Slight oil seepage observed around valve cover gasket.&quot;,
+      &quot;action_recommended&quot;: &quot;Replace valve cover gasket at next major service.&quot;,
+      &quot;cost_estimate&quot;: 1500
+    }
+  ],
+  &quot;technician_notes&quot;: &quot;Vehicle overall in excellent mechanical condition.&quot;,
+  &quot;recommendations&quot;: [&quot;Perform periodic oil service at 50,000 km&quot;],
+  &quot;created_at&quot;: &quot;2025-05-10T11:30:00Z&quot;
+}
+</code></pre>
+<h3>7.2 JSON Schema Validation</h3>
+<p>Validation is enforced directly within MongoDB 8.2 via collection validator rules:</p>
+<ul>
+<li><code>job_id</code>, <code>vehicle_id</code>, <code>mechanic_id</code>, and <code>overall_health_score</code> are strictly required.</li>
+<li><code>overall_health_score</code> must be a numerical value bounded between 0 and 100.</li>
+<li><code>findings.condition</code> must match one of the predefined enum values: <code>['Good', 'Fair', 'Worn', 'Damaged', 'Critical']</code>.</li>
+</ul>
+<hr />
+<h2>Section 8: Data Import, Validation, and Integrity</h2>
+<h3>8.1 Ingestion of US Department of Energy CSVs</h3>
+<p>The vehicle catalogue is populated using real-world public transportation data from the US Alternative Fuels Data Center (AFDC):</p>
+<ol>
+<li><strong>Light-Duty Vehicles (<code>light-duty-vehicles.csv</code>)</strong>: Conventional and hybrid passenger vehicles.</li>
+<li><strong>Alternative Fuel Vehicles (<code>afv_vehicles.csv</code>)</strong>: Electric, plug-in hybrid, CNG, and hydrogen fuel cell models.</li>
+<li><strong>Medium &amp; Heavy-Duty Vehicles (<code>medium_heavy_duty_vehicles.csv</code>)</strong>: Commercial electric and vocational trucks.</li>
+</ol>
+<p>The ingestion script (<code>database/import_csv_to_mysql.js</code>) parsed and cleaned the raw CSV records, normalized manufacturer names, and imported <strong>3,229 distinct models</strong> into MySQL with zero truncation errors.</p>
+<h3>8.2 Database Constraints &amp; Integrity Safeguards</h3>
+<ul>
+<li><strong>Primary &amp; Foreign Keys</strong>: 18 foreign keys enforce referential cascades and restrict orphaned records.</li>
+<li><strong>CHECK Constraints</strong>:
+<ul>
+<li><code>chk_parts_selling_price</code>: Enforces <code>selling_price &gt;= unit_cost</code>.</li>
+<li><code>chk_invoice_amounts</code>: Enforces <code>total_amount &gt;= 0</code> and <code>subtotal &gt;= 0</code>.</li>
+</ul>
+</li>
+<li><strong>Unique Constraints</strong>: Unique indices on <code>license_plate</code>, <code>vin</code>, <code>part_number</code>, and <code>email</code>.</li>
+</ul>
+<hr />
+<h2>Section 9: Backend API and Authentication/RBAC</h2>
+<h3>9.1 RESTful Route Structure (27 Dynamic Endpoints)</h3>
+<p>The backend provides 27 modular Next.js Route Handlers:</p>
+<ul>
+<li><strong>Authentication</strong>: <code>POST /api/auth/login</code>, <code>POST /api/auth/logout</code>, <code>GET /api/auth/me</code>.</li>
+<li><strong>Service Operations</strong>: <code>GET|POST /api/appointments</code>, <code>PATCH|DELETE /api/appointments/[id]</code>, <code>GET|POST /api/jobs</code>, <code>PATCH /api/jobs/[id]</code>, <code>GET|POST /api/jobs/[id]/parts</code>.</li>
+<li><strong>Diagnostic Documents</strong>: <code>GET|POST /api/reports</code>, <code>GET /api/reports/analytics</code>, <code>GET|PUT /api/reports/[jobId]</code>.</li>
+<li><strong>Inventory &amp; Billing</strong>: <code>GET|POST /api/inventory</code>, <code>GET|PUT /api/inventory/[id]</code>, <code>GET|POST /api/invoices</code>, <code>POST /api/invoices/[id]/payments</code>.</li>
+<li><strong>Advanced Features</strong>: <code>GET|POST /api/advanced/sql-runner</code>, <code>GET|POST /api/advanced/mongodb-aggregations</code>, <code>GET /api/search/semantic</code>.</li>
+</ul>
+<h3>9.2 Role-Based Access Control (RBAC) Matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Resource / Permission</th>
+<th style="text-align:center">Admin</th>
+<th style="text-align:center">Service Advisor</th>
+<th style="text-align:center">Mechanic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>User &amp; Staff Management</strong> (<code>manage_users</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Denied</td>
+<td style="text-align:center">Denied</td>
+</tr>
+<tr>
+<td><strong>Customer Intake</strong> (<code>manage_customers</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">View Only</td>
+</tr>
+<tr>
+<td><strong>Vehicle Registration</strong> (<code>manage_vehicles</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">View Only</td>
+</tr>
+<tr>
+<td><strong>Appointment Booking</strong> (<code>manage_appointments</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Denied</td>
+</tr>
+<tr>
+<td><strong>Workshop Job Dispatch</strong> (<code>manage_jobs</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Update Status</td>
+</tr>
+<tr>
+<td><strong>Part Allocation to Job</strong> (<code>manage_jobs</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+</tr>
+<tr>
+<td><strong>Inspection Report Authoring</strong> (<code>create_reports</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+</tr>
+<tr>
+<td><strong>Inventory Price &amp; Restock</strong> (<code>manage_inventory</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">View Only</td>
+<td style="text-align:center">View Only</td>
+</tr>
+<tr>
+<td><strong>Invoice Generation &amp; Billing</strong> (<code>manage_invoices</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Denied</td>
+</tr>
+<tr>
+<td><strong>Payment Settlement</strong> (<code>record_payments</code>)</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Full</td>
+<td style="text-align:center">Denied</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Section 10: Frontend Design and Feature Workflows</h2>
+<p>The web interface is built using Next.js 14 App Router and styled with Tailwind CSS:</p>
+<ul>
+<li><strong>Operations Dashboard (<code>/dashboard</code>)</strong>: KPI metric cards for active bay jobs, scheduled appointments, low inventory alerts, and fleet health distributions.</li>
+<li><strong>Appointment Intake (<code>/appointments</code>)</strong>: Dynamic customer/vehicle picker with date-time scheduling and MySQL stored procedure integration.</li>
+<li><strong>Workshop Bay Manager (<code>/jobs</code>)</strong>: Job state progression (<code>assigned</code> → <code>in_progress</code> → <code>completed</code>), odometer sign-off, part allocation with automated trigger deduction, and one-click invoice generation.</li>
+<li><strong>Diagnostic Reports Viewer (<code>/reports</code>)</strong>: Health score badges, interactive multi-point findings editor, and DTC fault code displays.</li>
+<li><strong>Vehicle Catalogue Explorer (<code>/catalogue</code>)</strong>: Filterable specification search across 3,229 models with a 3-vehicle comparison tray.</li>
+<li><strong>Inventory Stock Control (<code>/inventory</code>)</strong>: Stock level tables with low-stock warnings and adjustment modals.</li>
+<li><strong>Invoicing &amp; Settlement Ledger (<code>/invoices</code>)</strong>: Itemized billing breakdown (labor + parts + 18% GST) and payment settlement modals.</li>
+</ul>
+<hr />
+<h2>Section 11: Advanced SQL, MongoDB Aggregations, and Vector Search</h2>
+<h3>11.1 Advanced SQL Implementations</h3>
+<ol>
+<li><strong>Stored Procedures</strong>:
+<ul>
+<li><code>sp_book_appointment</code>: Books appointments while checking for vehicle scheduling conflicts.</li>
+<li><code>sp_generate_invoice</code>: Computes labor + parts subtotal, applies 18% GST, and creates invoice records.</li>
+<li><code>sp_get_customer_vehicle_history</code>: Retrieves chronological service histories with billing statuses.</li>
+<li><code>sp_mechanic_workload_summary</code>: Analyzes technician throughput and turnaround times.</li>
+<li><code>sp_replenish_low_stock_parts</code>: Cursor-based batch restocking of low-inventory parts.</li>
+</ul>
+</li>
+<li><strong>Stored Functions</strong>:
+<ul>
+<li><code>fn_invoice_total_paid(invoice_id)</code>: Computes cumulative payments settled against an invoice.</li>
+<li><code>fn_days_since_last_service(vehicle_id)</code>: Calculates elapsed days since a vehicle's last completed job.</li>
+</ul>
+</li>
+<li><strong>Database Triggers</strong>:
+<ul>
+<li><code>trg_deduct_stock_on_part_usage</code>: Automatically decrements <code>spare_parts.qty_in_stock</code> when parts are charged to a job.</li>
+<li><code>trg_restore_stock_on_part_delete</code>: Reverts inventory stock if a part allocation is removed.</li>
+<li><code>trg_mark_invoice_paid</code>: Automatically updates invoice status to <code>'paid'</code> when cumulative payments equal or exceed the total amount.</li>
+<li><code>trg_create_maintenance_reminder</code>: Inserts a maintenance reminder 180 days out upon job completion.</li>
+<li><code>trg_audit_spare_part_changes</code>: Logs price and stock changes to <code>spare_parts_audit</code>.</li>
+</ul>
+</li>
+<li><strong>ACID Transactions</strong>:
+<ul>
+<li>Demonstrated multi-table atomic inserts across <code>service_jobs</code>, <code>job_services</code>, and <code>part_usage</code>.</li>
+<li>Demonstrated automatic rollback on simulated error conditions.</li>
+<li>Demonstrated granular <code>SAVEPOINT</code> rollbacks.</li>
+</ul>
+</li>
+</ol>
+<h3>11.2 MongoDB Analytical Aggregations (7 Pipelines)</h3>
+<p>The aggregation engine (<code>/aggregations</code>) executes 7 server-registered pipelines:</p>
+<ul>
+<li><code>vehicle_health_summary</code>: Calculates average, min, and max health scores per vehicle.</li>
+<li><code>subsystem_defect_frequency</code>: Unwinds findings to group observations by subsystem and condition.</li>
+<li><code>condition_severity_distribution</code>: Computes total repair cost exposure per condition rating.</li>
+<li><code>common_dtc_fault_codes</code>: Aggregates OBD-II trouble code frequencies.</li>
+<li><code>inspections_over_time</code>: Analyzes monthly inspection volumes and quality trends.</li>
+<li><code>mechanic_workload_metrics</code>: Evaluates technician report counts and average assigned scores.</li>
+<li><code>high_cost_findings</code>: Filters high-cost defect recommendations exceeding a configurable threshold.</li>
+</ul>
+<h3>11.3 Diagnostic Semantic Vector Search</h3>
+<ul>
+<li><strong>Embedding Space</strong>: 64-dimensional dense semantic vectors with L2 unit normalization.</li>
+<li><strong>Similarity Metric</strong>: Cosine Similarity:
+$$\cos(\theta) = \frac{\vec{u} \cdot \vec{v}}{|\vec{u}|_2 |\vec{v}|_2} = \vec{u} \cdot \vec{v} \quad (\text{for unit vectors})$$</li>
+<li><strong>Corpus</strong>: Combines an 8-pattern curated knowledge base with dynamically embedded MongoDB inspection records.</li>
+<li><strong>Performance</strong>: Natural language queries return ranked results in under 2ms.</li>
+</ul>
+<hr />
+<h2>Section 12: Testing, Verification, Results, and Limitations</h2>
+<h3>12.1 Automated Test Suite</h3>
+<p>All test suites run via Node's native test runner (<code>node tests/runner.js</code>) against live MySQL 8.0 and MongoDB 8.2 instances:</p>
+<pre><code>▶ Authentication &amp; JWT Session Tests
+  ✔ should sign and verify valid session tokens (6.3ms)
+  ✔ should reject tampered or invalid tokens (2.2ms)
+  ✔ should securely hash and verify passwords using bcrypt (479.5ms)
+✔ Authentication &amp; JWT Session Tests (490.3ms)
+
+▶ Role-Based Access Control (RBAC) Tests
+  ✔ Admin should have full access to all features (0.4ms)
+  ✔ Service Advisor should manage appointments and payments, but NOT manage users (0.4ms)
+  ✔ Mechanic should create reports, but NOT record payments or manage inventory (0.3ms)
+✔ Role-Based Access Control (RBAC) Tests (1.5ms)
+
+▶ Repair Report Schema Validation Tests
+  ✔ should accept a completely valid multi-point inspection report (1.8ms)
+  ✔ should reject reports with missing mandatory foreign keys (0.3ms)
+  ✔ should reject reports with invalid health scores (&lt; 0 or &gt; 100) (0.4ms)
+  ✔ should reject findings with invalid condition enum values (0.2ms)
+✔ Repair Report Schema Validation Tests (4.5ms)
+
+▶ Database Integration Tests (Live MySQL &amp; MongoDB)
+  ✔ MySQL: should successfully query all 6 initial users with correct roles (14.1ms)
+  ✔ MySQL: should query vehicle catalogue containing &gt; 3000 imported models (9.9ms)
+  ✔ MySQL: should execute stored procedure sp_get_customer_vehicle_history (9.1ms)
+  ✔ MySQL: should execute stored function fn_invoice_total_paid (4.8ms)
+  ✔ MySQL: should execute stored function fn_days_since_last_service (3.7ms)
+  ✔ MySQL View: vw_inventory_low_stock should isolate parts below reorder level (5.2ms)
+  ✔ MongoDB: should query repair_reports collection with polymorphic findings (23.9ms)
+  ✔ MongoDB Aggregation: should calculate fleet health statistics via aggregation pipeline (8.8ms)
+✔ Database Integration Tests (Live MySQL &amp; MongoDB) (173.8ms)
+
+▶ Interactive SQL Query Runner &amp; Registry Tests
+  ✔ Registry contains at least 18 distinct, educational SQL queries (48.0ms)
+  ✔ All registered queries have required metadata and valid SQL syntax (141.9ms)
+  ✔ Advanced Views (vw_customer_fleet_overview, vw_technician_performance, vw_invoice_settlement_audit) are accessible (5.4ms)
+✔ Interactive SQL Query Runner &amp; Registry Tests (199.8ms)
+
+▶ MongoDB Aggregation Pipeline Runner Tests
+  ✔ Registry contains all 7 approved aggregation pipelines (77.4ms)
+  ✔ All pipelines execute successfully against live MongoDB repair_reports (35.5ms)
+✔ MongoDB Aggregation Pipeline Runner Tests (143.9ms)
+
+▶ Diagnostic Semantic / Vector Similarity Search Tests
+  ✔ Model specification and dimensions are verified (0.8ms)
+  ✔ generateEmbedding produces a normalized 64-dimensional vector (0.5ms)
+  ✔ cosineSimilarity computes mathematical dot product of unit vectors (0.5ms)
+  ✔ searchSemanticDiagnostics returns ranked results with metadata (0.6ms)
+  ✔ search handles empty or whitespace queries gracefully (0.9ms)
+✔ Diagnostic Semantic / Vector Similarity Search Tests (61.3ms)
+
+─────────────────────────────────────────────────────────────
+Summary: 31 Total Tests | 31 Passed | 0 Failed | Duration: 2.70s
+</code></pre>
+<h3>12.2 Known Limitations</h3>
+<ol>
+<li><strong>Vector Search Scale</strong>: The current vector search engine operates in-memory; scaling to hundreds of thousands of documents would benefit from external vector stores (e.g., Qdrant, Pinecone, or PostgreSQL with pgvector).</li>
+<li><strong>Payment Gateway</strong>: Payment recording simulates settlement transactions via database triggers rather than integrating an external payment gateway.</li>
+</ol>
+<hr />
+<h2>Section 13: Installation, User Guide, Conclusion, and Future Enhancements</h2>
+<h3>13.1 Installation &amp; Execution Guide</h3>
+<ol>
+<li>
+<p><strong>Clone &amp; Install Dependencies</strong>:</p>
+<pre><code class="language-bash">git clone &lt;repository_url&gt;
+cd DBMS_Assignment
+npm install
+</code></pre>
+</li>
+<li>
+<p><strong>Configure Environment Variables</strong>:
+Copy <code>.env.example</code> to <code>.env.local</code> and configure credentials:</p>
+<pre><code class="language-ini">MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=YourPassword
+MYSQL_DATABASE=autocare_insight
+
+MONGODB_URI=mongodb://localhost:27017/autocare_db
+MONGODB_DB_NAME=autocare_db
+
+JWT_SECRET=super_secure_jwt_secret_key_pes_2026
+</code></pre>
+</li>
+<li>
+<p><strong>Initialize Database Schemas</strong>:</p>
+<pre><code class="language-powershell">&amp; &quot;C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe&quot; -u root -p autocare_insight -e &quot;source database/01_create_database.sql; source database/02_create_tables.sql; source database/03_advanced_features.sql; source database/05_sample_data.sql;&quot;
+node database/import_csv_to_mysql.js
+node database/06_mongodb_schema.js
+</code></pre>
+</li>
+<li>
+<p><strong>Run Verification &amp; Test Suite</strong>:</p>
+<pre><code class="language-bash">node tests/runner.js
+</code></pre>
+</li>
+<li>
+<p><strong>Start Application</strong>:</p>
+<pre><code class="language-bash">npm run dev
+# Access application at http://localhost:3000
+</code></pre>
+</li>
+</ol>
+<h3>13.2 Conclusion</h3>
+<p>AutoCare Insight satisfies all criteria of the PES University DBMS Experiential Learning Level 3 specification. By coupling MySQL 8.0 for transactional integrity with MongoDB 8.2 for polymorphic inspection reporting and an in-memory 64-dimensional semantic search engine, the project demonstrates a robust, production-grade automotive service management platform.</p>
+<h3>13.3 Future Enhancements</h3>
+<ul>
+<li><strong>IoT OBD-II Telematics</strong>: Live CAN-bus data streaming directly from connected vehicles into MongoDB time-series collections.</li>
+<li><strong>Automated Restock EDI</strong>: Automated Electronic Data Interchange (EDI) purchase orders triggered when spare parts breach reorder thresholds.</li>
+<li><strong>Deep Embedding Fine-Tuning</strong>: Transitioning from custom 64-D dense embeddings to fine-tuned sentence transformers deployed on dedicated inference servers.</li>
+</ul>
+
+</body>
+</html>

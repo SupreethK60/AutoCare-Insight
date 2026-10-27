@@ -125,3 +125,4 @@ SELECT * FROM vw_technician_performance;
 
 SELECT '--- VIEW: vw_invoice_settlement_audit ---' AS check_title;
 SELECT * FROM vw_invoice_settlement_audit LIMIT 5;
+

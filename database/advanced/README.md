@@ -56,3 +56,4 @@ CALL sp_mechanic_workload_summary(4, 60);
 -- 4. Check low stock parts
 SELECT * FROM vw_inventory_low_stock;
 ```
+

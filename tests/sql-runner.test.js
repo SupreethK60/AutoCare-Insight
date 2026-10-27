@@ -58,3 +58,4 @@ test('Interactive SQL Query Runner & Registry Tests', async (t) => {
     assert.ok(viewNames.includes('vw_invoice_settlement_audit'), 'vw_invoice_settlement_audit must exist');
   });
 });
+

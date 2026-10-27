@@ -108,3 +108,4 @@ UPDATE spare_parts
 SET qty_in_stock = qty_in_stock - 10,
     selling_price = selling_price - 50.00
 WHERE part_id = 1;
+
