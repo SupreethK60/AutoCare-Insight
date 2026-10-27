@@ -30,3 +30,4 @@ export function Badge({ status, size = 'sm' }: BadgeProps) {
     </span>
   );
 }
+

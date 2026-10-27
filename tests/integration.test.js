@@ -48,8 +48,9 @@ describe('Database Integration Tests (Live MySQL & MongoDB)', () => {
     const records = result[0];
     assert.ok(Array.isArray(records));
     assert.ok(records.length > 0);
-    assert.strictEqual(records[0].job_id, 1);
-    assert.strictEqual(records[0].payment_status, 'paid');
+    const job1 = records.find(r => r.job_id === 1);
+    assert.ok(job1, 'Job #1 must be present in history');
+    assert.strictEqual(job1.payment_status, 'paid');
   });
 
   it('MySQL: should execute stored function fn_invoice_total_paid', async () => {

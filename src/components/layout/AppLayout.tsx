@@ -19,7 +19,9 @@ import {
   X,
   LogOut,
   ChevronDown,
-  Sparkles
+  Sparkles,
+  Terminal,
+  BarChart3
 } from 'lucide-react';
 
 interface NavItem {
@@ -82,6 +84,24 @@ const NAV_ITEMS: NavItem[] = [
     name: 'Registered Vehicles',
     href: '/vehicles',
     icon: Car,
+    roles: ['admin', 'service_advisor', 'mechanic']
+  },
+  {
+    name: 'SQL Query Runner',
+    href: '/sql-runner',
+    icon: Terminal,
+    roles: ['admin', 'service_advisor']
+  },
+  {
+    name: 'MongoDB Aggregations',
+    href: '/aggregations',
+    icon: BarChart3,
+    roles: ['admin', 'service_advisor', 'mechanic']
+  },
+  {
+    name: 'Diagnostic Search',
+    href: '/search',
+    icon: Sparkles,
     roles: ['admin', 'service_advisor', 'mechanic']
   }
 ];
@@ -287,3 +307,4 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+

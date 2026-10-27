@@ -6,6 +6,9 @@ const files = [
   path.join(__dirname, 'auth.test.js'),
   path.join(__dirname, 'validation.test.js'),
   path.join(__dirname, 'integration.test.js'),
+  path.join(__dirname, 'sql-runner.test.js'),
+  path.join(__dirname, 'aggregations.test.js'),
+  path.join(__dirname, 'vector-search.test.js'),
 ];
 
 run({ files })
@@ -14,3 +17,4 @@ run({ files })
   })
   .compose(new spec())
   .pipe(process.stdout);
+
