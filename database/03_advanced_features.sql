@@ -1,6 +1,6 @@
--- ============================================================
--- AutoCare Insight — Vehicle Service Management System
--- Script 03: Advanced SQL — Views, Stored Procedures,
+﻿-- ============================================================
+-- AutoCare Insight â€” Vehicle Service Management System
+-- Script 03: Advanced SQL â€” Views, Stored Procedures,
 --            Functions, Triggers, and Transactions
 -- Run after 02_create_tables.sql + 05_sample_data.sql
 -- ============================================================
@@ -13,12 +13,12 @@ DELIMITER $$
 -- SECTION A: VIEWS
 -- ============================================================
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- VIEW 1: vw_service_summary
 -- Full summary of every job: customer, vehicle, mechanic,
 -- services performed, total invoice amount, and payment status.
 -- Use Case: Management dashboard, customer history lookup.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP VIEW IF EXISTS vw_service_summary$$
 
 CREATE VIEW vw_service_summary AS
@@ -73,11 +73,11 @@ GROUP BY
     inv.invoice_id, inv.subtotal, inv.tax_amount, inv.discount_amount, inv.total_amount, inv.status$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- VIEW 2: vw_inventory_low_stock
 -- Parts where qty_in_stock is at or below the reorder_level.
 -- Use Case: Purchasing team sees what needs restocking.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP VIEW IF EXISTS vw_inventory_low_stock$$
 
 CREATE VIEW vw_inventory_low_stock AS
@@ -99,11 +99,11 @@ WHERE qty_in_stock <= reorder_level
 ORDER BY units_short DESC$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- VIEW 3: vw_pending_maintenance
 -- Vehicles whose maintenance reminder is due (unsent, active).
 -- Use Case: Service advisor sees who to call/SMS today.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP VIEW IF EXISTS vw_pending_maintenance$$
 
 CREATE VIEW vw_pending_maintenance AS
@@ -140,13 +140,13 @@ ORDER BY mr.next_service_date ASC$$
 -- SECTION B: STORED PROCEDURES
 -- ============================================================
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- PROCEDURE 1: sp_book_appointment
 -- Books a new appointment atomically.
 -- Validates: customer exists, vehicle belongs to customer,
 --            no double-booking for same vehicle on same day.
 -- Usage: CALL sp_book_appointment(1, 3, 2, '2025-06-01 10:00:00', 1, 'Oil making noise', @appt_id, @msg);
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP PROCEDURE IF EXISTS sp_book_appointment$$
 
 CREATE PROCEDURE sp_book_appointment(
@@ -159,7 +159,7 @@ CREATE PROCEDURE sp_book_appointment(
     OUT p_appointment_id   INT UNSIGNED,
     OUT p_message          VARCHAR(255)
 )
-BEGIN
+sp_book_appointment: BEGIN
     DECLARE v_vehicle_owner  INT UNSIGNED DEFAULT 0;
     DECLARE v_conflict_count INT DEFAULT 0;
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -193,7 +193,7 @@ BEGIN
         LEAVE sp_book_appointment;
     END IF;
 
-    -- 3. All checks passed — insert atomically
+    -- 3. All checks passed â€” insert atomically
     START TRANSACTION;
 
         INSERT INTO appointments (customer_id, vehicle_id, advisor_id, scheduled_at,
@@ -209,13 +209,13 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- PROCEDURE 2: sp_generate_invoice
 -- Calculates and inserts an invoice for a completed job.
 -- Totals: service charges from job_services + parts costs
 --         from part_usage, then applies tax and discount.
 -- Usage: CALL sp_generate_invoice(5, 18.00, 0.00, @inv_id, @msg);
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP PROCEDURE IF EXISTS sp_generate_invoice$$
 
 CREATE PROCEDURE sp_generate_invoice(
@@ -225,7 +225,7 @@ CREATE PROCEDURE sp_generate_invoice(
     OUT p_invoice_id      INT UNSIGNED,
     OUT p_message         VARCHAR(255)
 )
-BEGIN
+sp_generate_invoice: BEGIN
     DECLARE v_customer_id  INT UNSIGNED DEFAULT 0;
     DECLARE v_job_status   VARCHAR(30);
     DECLARE v_existing_inv INT DEFAULT 0;
@@ -297,11 +297,11 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- PROCEDURE 3: sp_get_customer_vehicle_history
 -- Returns full service history for a given customer vehicle.
 -- Usage: CALL sp_get_customer_vehicle_history(3);
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP PROCEDURE IF EXISTS sp_get_customer_vehicle_history$$
 
 CREATE PROCEDURE sp_get_customer_vehicle_history(
@@ -338,10 +338,10 @@ END$$
 -- SECTION C: STORED FUNCTIONS
 -- ============================================================
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- FUNCTION 1: fn_invoice_total_paid
 -- Returns total amount paid so far against an invoice.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP FUNCTION IF EXISTS fn_invoice_total_paid$$
 
 CREATE FUNCTION fn_invoice_total_paid(p_invoice_id INT UNSIGNED)
@@ -358,10 +358,10 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- FUNCTION 2: fn_days_since_last_service
 -- Returns how many days ago a vehicle last had a completed job.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP FUNCTION IF EXISTS fn_days_since_last_service$$
 
 CREATE FUNCTION fn_days_since_last_service(p_vehicle_id INT UNSIGNED)
@@ -387,11 +387,11 @@ END$$
 -- SECTION D: TRIGGERS
 -- ============================================================
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- TRIGGER 1: trg_deduct_stock_on_part_usage
 -- AFTER INSERT on part_usage:
 -- Automatically reduces spare_parts.qty_in_stock by qty_used.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP TRIGGER IF EXISTS trg_deduct_stock_on_part_usage$$
 
 CREATE TRIGGER trg_deduct_stock_on_part_usage
@@ -405,11 +405,11 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- TRIGGER 2: trg_restore_stock_on_part_usage_delete
 -- AFTER DELETE on part_usage:
 -- Restores stock if a part usage row is removed (e.g. job cancelled).
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP TRIGGER IF EXISTS trg_restore_stock_on_part_usage_delete$$
 
 CREATE TRIGGER trg_restore_stock_on_part_usage_delete
@@ -423,13 +423,13 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- TRIGGER 3: trg_auto_reminder_on_job_complete
 -- AFTER UPDATE on service_jobs:
 -- When a job status changes to 'completed', automatically
 -- create a maintenance reminder for the next oil change
 -- (3000 km / 90 days from now), if none already active.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP TRIGGER IF EXISTS trg_auto_reminder_on_job_complete$$
 
 CREATE TRIGGER trg_auto_reminder_on_job_complete
@@ -472,12 +472,12 @@ BEGIN
 END$$
 
 
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- TRIGGER 4: trg_mark_invoice_paid
 -- AFTER INSERT on invoice_payments:
 -- If total paid >= invoice total, automatically marks the
 -- invoice status as 'paid'.
--- ──────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 DROP TRIGGER IF EXISTS trg_mark_invoice_paid$$
 
 CREATE TRIGGER trg_mark_invoice_paid
@@ -527,7 +527,7 @@ ON vehicle_catalogue (manufacturer, model, category, fuel);
 -- ============================================================
 -- SECTION F: DEMONSTRATION TRANSACTION
 -- Shows an atomic transaction used in a real workflow:
--- "Complete a job, deduct stock, generate invoice — all or nothing"
+-- "Complete a job, deduct stock, generate invoice â€” all or nothing"
 -- ============================================================
 -- NOTE: This is a DEMONSTRATION block. Run manually to test.
 -- Replace the IDs with real values after inserting sample data.
@@ -543,7 +543,7 @@ WHERE job_id = 1;
 
 -- Step 2: Record a part used
 INSERT INTO part_usage (job_id, part_id, qty_used, unit_price_charged)
-VALUES (1, 1, 2, 450.00);   -- 2x oil filters @ ₹450 each
+VALUES (1, 1, 2, 450.00);   -- 2x oil filters @ â‚¹450 each
 
 -- Step 3: Generate invoice (calls stored procedure)
 CALL sp_generate_invoice(1, 18.00, 0.00, @inv_id, @msg);

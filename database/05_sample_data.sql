@@ -1,14 +1,14 @@
--- ============================================================
--- AutoCare Insight — Vehicle Service Management System
+﻿-- ============================================================
+-- AutoCare Insight â€” Vehicle Service Management System
 -- Script 05: Sample / Seed Data
 -- Run after 02_create_tables.sql (and optionally 03_advanced_features.sql)
 -- ============================================================
 
 USE autocare_insight;
 
--- ─────────────────────────────────────────────────────────────
--- USERS (password_hash is a bcrypt placeholder — real app uses bcrypt)
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+-- USERS (password_hash is a bcrypt placeholder â€” real app uses bcrypt)
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO users (full_name, email, password_hash, role, phone) VALUES
 ('Admin User',          'admin@autocare.com',   '$2b$10$placeholder_admin_hash',    'admin',           '9800000001'),
 ('Rajesh Kumar',        'rajesh@autocare.com',  '$2b$10$placeholder_advisor1_hash', 'service_advisor', '9800000002'),
@@ -18,9 +18,9 @@ INSERT INTO users (full_name, email, password_hash, role, phone) VALUES
 ('Vikram Patel',        'vikram@autocare.com',  '$2b$10$placeholder_mech3_hash',    'mechanic',        '9800000006');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- CUSTOMERS
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO customers (full_name, email, phone, address, city, state, zip_code) VALUES
 ('Arjun Sharma',     'arjun.sharma@email.com',    '9811111111', '12, MG Road, Koramangala',       'Bengaluru', 'Karnataka', '560034'),
 ('Deepa Verma',      'deepa.verma@email.com',     '9822222222', '5, Anna Nagar, 4th Street',      'Chennai',   'Tamil Nadu','600040'),
@@ -30,9 +30,9 @@ INSERT INTO customers (full_name, email, phone, address, city, state, zip_code) 
 ('Tanuja Iyer',      'tanuja.iyer@email.com',     '9866666666', 'Block D, Srinagar Colony',       'Bengaluru', 'Karnataka', '560085');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- VEHICLE CATALOGUE (8 sample rows for testing before CSV import)
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO vehicle_catalogue (
     manufacturer, model, model_year, category, fuel, fuel_code,
     engine_type, engine_size, engine_cylinders, engine_description,
@@ -51,9 +51,9 @@ INSERT INTO vehicle_catalogue (
 ('Blue Bird',  'All American',2022,'Transit Bus',   'CNG - Compressed Natural Gas','CNG',NULL,NULL,  NULL, NULL,           NULL,   NULL,   NULL, NULL, NULL,  NULL,  NULL,  NULL,  NULL,   'MHD', 10900);
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- CUSTOMER VEHICLES
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO customer_vehicles (customer_id, catalogue_id, license_plate, vin, color, purchase_year, current_odometer) VALUES
 (1, 1, 'KA01AB1234', '1HGBH41JXMN109186', 'Midnight Black',  2021, 48000),
 (2, 4, 'TN05CD5678', '2T1BURHE0JC025483', 'Pearl White',      2022, 22000),
@@ -63,9 +63,9 @@ INSERT INTO customer_vehicles (customer_id, catalogue_id, license_plate, vin, co
 (6, 2, 'KA09KL2345', '1VWSA7A34LC012345', 'Glacier Silver',   2022, 8000);
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- SERVICE TYPES
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO service_types (service_name, description, estimated_duration_mins, base_price) VALUES
 ('Oil Change',                'Engine oil and filter replacement',              45,  850.00),
 ('Tyre Rotation',             'Rotate all 4 tyres to even out wear',            30,  400.00),
@@ -79,9 +79,9 @@ INSERT INTO service_types (service_name, description, estimated_duration_mins, b
 ('Transmission Service',      'Transmission fluid flush and filter',            90, 3500.00);
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- APPOINTMENTS
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO appointments (customer_id, vehicle_id, advisor_id, scheduled_at, service_type_id, status, mileage_at_booking, customer_notes) VALUES
 (1, 1, 2, '2025-05-10 10:00:00', 1, 'completed',  47500, 'Engine making slight ticking noise'),
 (2, 2, 2, '2025-05-12 11:00:00', 3, 'completed',  21800, 'Squealing sound from front brakes'),
@@ -91,27 +91,27 @@ INSERT INTO appointments (customer_id, vehicle_id, advisor_id, scheduled_at, ser
 (6, 6, 3, '2025-05-20 15:00:00', 2, 'pending',     7900, 'First tyre rotation since purchase');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- SERVICE JOBS (from completed appointments)
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO service_jobs (appointment_id, mechanic_id, vehicle_id, status, odometer_in, odometer_out, started_at, completed_at, mongo_report_id, internal_notes) VALUES
 (1, 4, 1, 'completed', 47500, 47510, '2025-05-10 10:15:00', '2025-05-10 11:10:00', '6648a1b2c3d4e5f601020304', 'Ticking was due to low oil. Resolved after oil change.'),
 (2, 5, 2, 'completed', 21800, 21800, '2025-05-12 11:10:00', '2025-05-12 12:40:00', '6648a1b2c3d4e5f601020305', 'Front brake pads 20% life remaining. Customer opted for inspection only.'),
 (3, 6, 3, 'completed', 74800, 74800, '2025-05-14 09:45:00', '2025-05-14 11:45:00', '6648a1b2c3d4e5f601020306', '65-point inspection done. Air filter needs replacing next visit.');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- JOB SERVICES
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO job_services (job_id, service_type_id, service_price, technician_notes) VALUES
 (1, 1,  850.00, 'Used 5W-30 synthetic oil. Filter replaced.'),
 (2, 3,  600.00, 'Front pads measured at 4mm. Rear good at 8mm.'),
 (3, 7, 1500.00, 'All systems checked. Lights, fluid levels, brakes, suspension.');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- SPARE PARTS
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO spare_parts (part_number, part_name, description, category, brand, unit_cost, selling_price, qty_in_stock, reorder_level, location_code) VALUES
 ('OIL-FLT-001',  'Engine Oil Filter',         'Universal spin-on oil filter',                'Engine',      'Bosch',   120.00, 200.00, 45, 10, 'A1-S1'),
 ('OIL-5W30-4L',  '5W-30 Synthetic Oil 4L',    '5W-30 full synthetic engine oil, 4L can',     'Engine',      'Castrol', 680.00, 850.00, 30,  8, 'A1-S2'),
@@ -125,44 +125,44 @@ INSERT INTO spare_parts (part_number, part_name, description, category, brand, u
 ('CLT-FLD-1L',   'Coolant 1L',               'OAT coolant concentrate 1L, mix 50:50',       'Cooling',     'Havoline', 180.00,280.00, 15,  8, 'A3-S1');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- PART USAGE (Job 1: Oil Change used oil filter + oil)
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO part_usage (job_id, part_id, qty_used, unit_price_charged) VALUES
 (1, 1, 1, 200.00),   -- 1x Oil Filter
 (1, 2, 1, 850.00);   -- 1x 5W-30 Synthetic Oil 4L
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- INVOICES (auto-generated for 3 completed jobs)
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO invoices (job_id, customer_id, subtotal, tax_rate, tax_amount, discount_amount, total_amount, status, issued_at, due_date) VALUES
 (1, 1, 1850.00, 18.00, 333.00, 0.00, 2183.00, 'paid',   '2025-05-10 11:15:00', '2025-05-17'),
 (2, 2,  600.00, 18.00, 108.00, 0.00,  708.00, 'paid',   '2025-05-12 12:45:00', '2025-05-19'),
 (3, 3, 1500.00, 18.00, 270.00, 0.00, 1770.00, 'issued', '2025-05-14 11:50:00', '2025-05-21');
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- PAYMENTS
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO invoice_payments (invoice_id, amount_paid, payment_method, reference_number, recorded_by) VALUES
 (1, 2183.00, 'upi',  'UPI2025051099001', 2),
 (2,  708.00, 'card', 'TXN2025051299002', 2);
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- MAINTENANCE REMINDERS
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 INSERT INTO maintenance_reminders (vehicle_id, service_type_id, reminder_type, next_service_date, next_service_odometer, interval_km, interval_days, created_by) VALUES
-(2, 1, 'interval', '2025-08-12', 27000, 5000, 180, 2),  -- Deepa's Toyota — oil change
-(3, 7, 'date',     '2025-11-14', NULL,   NULL, 180, 3),  -- Farhan's Ford — general inspection
-(5, 4, 'mileage',  NULL,        40000,  NULL, NULL, 2);  -- Ravi's Tesla — battery check at 40k
+(2, 1, 'interval', '2025-08-12', 27000, 5000, 180, 2),  -- Deepa's Toyota â€” oil change
+(3, 7, 'date',     '2025-11-14', NULL,   NULL, 180, 3),  -- Farhan's Ford â€” general inspection
+(5, 4, 'mileage',  NULL,        40000,  NULL, NULL, 2);  -- Ravi's Tesla â€” battery check at 40k
 
 
--- ─────────────────────────────────────────────────────────────
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 -- VERIFY: Row counts for all tables
--- ─────────────────────────────────────────────────────────────
-SELECT 'users'                 AS tbl, COUNT(*) AS rows FROM users              UNION ALL
+-- â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+SELECT 'users'                 AS tbl, COUNT(*) AS total_rows FROM users              UNION ALL
 SELECT 'customers',                    COUNT(*)          FROM customers          UNION ALL
 SELECT 'vehicle_catalogue',            COUNT(*)          FROM vehicle_catalogue  UNION ALL
 SELECT 'customer_vehicles',            COUNT(*)          FROM customer_vehicles  UNION ALL

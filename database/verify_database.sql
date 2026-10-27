@@ -56,5 +56,4 @@ SELECT 'vw_inventory_low_stock sample:' AS test;
 SELECT part_number, part_name, qty_in_stock, reorder_level FROM vw_inventory_low_stock;
 
 SELECT 'vw_pending_maintenance sample:' AS test;
-SELECT reminder_id, customer_name, vehicle_description, service_name, trigger_condition FROM vw_pending_maintenance;
-
+SELECT reminder_id, customer_name, vehicle_description, service_due, reminder_type, km_remaining FROM vw_pending_maintenance;
