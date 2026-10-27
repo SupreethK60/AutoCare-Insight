@@ -95,3 +95,4 @@ DROP PROCEDURE IF EXISTS sp_temp_demo_proc;
 DROP TRIGGER IF EXISTS trg_temp_demo_trigger;
 
 SELECT 'Script 08: DDL ALTER & DROP statements executed successfully.' AS status;
+

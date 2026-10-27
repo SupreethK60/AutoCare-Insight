@@ -11,11 +11,14 @@ coverage/
 out/
 build/
 dist/
+*.tsbuildinfo
+next-env.d.ts
 
-# Production
+# Production & Local Secrets
 .env
 .env.local
-.env.production
+.env.development.local
+.env.test.local
 .env.production.local
 
 # Debug logs
