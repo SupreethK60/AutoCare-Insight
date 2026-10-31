@@ -571,3 +571,4 @@ AutoCare Insight satisfies all criteria of the PES University DBMS Experiential 
 - **IoT OBD-II Telematics**: Live CAN-bus data streaming directly from connected vehicles into MongoDB time-series collections.
 - **Automated Restock EDI**: Automated Electronic Data Interchange (EDI) purchase orders triggered when spare parts breach reorder thresholds.
 - **Deep Embedding Fine-Tuning**: Transitioning from custom 64-D dense embeddings to fine-tuned sentence transformers deployed on dedicated inference servers.
+

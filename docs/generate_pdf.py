@@ -160,3 +160,4 @@ if os.path.exists(pdf_path):
     print(f"Generated PDF successfully: {pdf_path} (Size: {os.path.getsize(pdf_path)} bytes)")
 else:
     print(f"PDF creation failed. Stderr: {res.stderr}")
+
